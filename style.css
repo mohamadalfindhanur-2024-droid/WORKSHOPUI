@@ -1,0 +1,231 @@
+/* Global stylesheet for EventLite UI
+   - Reset
+   - CSS Variables
+   - Typography
+   - Utility classes and components
+   - Responsive rules
+*/
+
+/* 1) Font import (Inter) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+/* 2) Reset & Box-sizing */
+:root {
+  --primary: #6366F1; /* indigo-500 */
+  --accent: #F43F5E;  /* rose-500 */
+  --bg-light: #F8FAFC; /* slate-50 */
+  --bg-dark: #0F172A;  /* slate-900 */
+  --text: #0F172A;
+  --muted: #6B7280;
+  --card: #FFFFFF;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 6px 20px rgba(15,23,42,0.08);
+  --max-width: 1200px;
+}
+
+/* Box-sizing + sensible defaults */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body, #root {
+  height: 100%;
+}
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-light);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove default list styles */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Images and media */
+img, picture, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Form elements baseline */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* 3) Utility classes */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.col {
+  flex: 1 1 0px;
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+/* Buttons: .btn-accent (primary action: buy ticket), .btn-primary (secondary) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+  font-weight: 600;
+}
+
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(244,63,94,0.18);
+}
+
+.btn-accent:hover { filter: brightness(0.98); }
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(99,102,241,0.12);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(15,23,42,0.06);
+}
+
+/* Card for events */
+.event-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 180ms ease, transform 180ms ease;
+  overflow: hidden;
+}
+.event-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.event-card .title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+.event-card .meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Grid helpers */
+.grid-events {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+/* Simple utility spacing */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.p-1 { padding: 0.5rem; }
+
+/* Header / nav baseline */
+.site-header {
+  background: transparent;
+  padding: 1rem 0;
+}
+.site-brand {
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+
+/* Footer baseline */
+.site-footer {
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* 4) Responsive breakpoints (mobile-first) */
+@media (min-width: 480px) {
+  :root { --max-width: 1000px; }
+  .grid-events { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 768px) {
+  :root { --max-width: 1100px; }
+  .grid-events { grid-template-columns: repeat(3, 1fr); }
+  .container { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+
+@media (min-width: 1100px) {
+  :root { --max-width: 1200px; }
+  .grid-events { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-light: #071024;
+    --card: #071428;
+    --text: #E6EEF8;
+    --muted: #9AA6B2;
+  }
+  body { background: var(--bg-light); }
+}
+
+/* Utility: visually hidden (for accessibility) */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
+/* END global stylesheet */

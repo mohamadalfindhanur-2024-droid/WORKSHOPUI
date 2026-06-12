@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Arsip Artikel — EventLite</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .grid-articles { display:grid; grid-template-columns:1fr; gap:1rem; }
+    .article-card { background:#ffffff; padding:1.25rem; border-radius:12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .article-card .excerpt { color:var(--text-muted); margin-top: 0.5rem; font-size: 0.9rem; }
+    @media (min-width:600px){ .grid-articles{ grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width:1000px){ .grid-articles{ grid-template-columns: repeat(3, 1fr); } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container row" style="align-items:center; justify-content:space-between;">
+      <div class="site-brand">EventLite</div>
+      <nav>
+        <a href="index.html" style="margin-right:1rem;">Home</a>
+        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
+        <a class="btn btn-ghost" href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mt-2" style="min-height: 75vh;">
+    <h2>Arsip Artikel</h2>
+    <p class="text-muted small">Kumpulan berita, tips, dan update seputar konser musik di Indonesia.</p>
+
+    <section class="grid-articles mt-2">
+      <article class="article-card event-card">
+        <h3 style="margin:0; font-size: 1.15rem; color: var(--text-main);">Tips Menang War Tiket Konser Musik</h3>
+        <div class="meta small" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;">12 Agustus 2026 • Tips</div>
+        <p class="excerpt">Pembahasan strategi cepat dan praktis agar peluang menang tiket meningkat pesat saat platform open sale.</p>
+        <div style="margin-top:1rem;"><a class="btn btn-primary" style="padding: 6px 12px; font-size: 0.85rem;" href="detail-artikel.html">Baca Selengkapnya</a></div>
+      </article>
+
+      <article class="article-card event-card">
+        <h3 style="margin:0; font-size: 1.15rem; color: var(--text-main);">Rundown Festival Musik Pekan Ini</h3>
+        <div class="meta small" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;">09 Agustus 2026 • Berita</div>
+        <p class="excerpt">Jadwal lengkap pembagian panggung festival besar yang wajib kamu cek sebelum berangkat ke lokasi acara.</p>
+        <div style="margin-top:1rem;"><a class="btn btn-primary" style="padding: 6px 12px; font-size: 0.85rem;" href="detail-artikel.html">Baca Selengkapnya</a></div>
+      </article>
+
+      <article class="article-card event-card">
+        <h3 style="margin:0; font-size: 1.15rem; color: var(--text-main);">Cara Menghindari Penipuan Tiket online</h3>
+        <div class="meta small" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;">02 Agustus 2026 • Keamanan</div>
+        <p class="excerpt">Langkah praktis memverifikasi e-ticket agar transaksi aman tanpa khawatir tertipu oleh oknum calo.</p>
+        <div style="margin-top:1rem;"><a class="btn btn-primary" style="padding: 6px 12px; font-size: 0.85rem;" href="detail-artikel.html">Baca Selengkapnya</a></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="small text-muted">© 2026 EventLite — Semua hak dilindungi.</div>
+    </div>
+  </footer>
+</body>
+</html>

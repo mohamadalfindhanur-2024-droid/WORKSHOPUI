@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Keranjang — EventLite</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-card{background:var(--card);padding:1rem;border-radius:12px;box-shadow:var(--shadow-sm)}
+    .cart-empty{padding:2rem;text-align:center;color:var(--muted)}
+    .cart-items > div{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+    .cart-summary{display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container row" style="align-items:center; justify-content:space-between;">
+      <a href="home-customer.html" class="site-brand" style="font-weight:800;">EventLite</a>
+      <nav>
+        <a href="home-customer.html" style="margin-right:1rem;">Home</a>
+        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
+        <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
+        <a href="keranjang.html" style="margin-right:1rem;" class="active">Keranjang</a>
+        <a class="btn btn-ghost" href="index.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mt-2" style="min-height:60vh;">
+    <h2>Keranjang Anda</h2>
+
+    <div class="cart-card">
+      <div id="cart-items">
+        <div class="cart-empty" id="cart-empty-msg">Keranjang kosong. Tambah tiket dari katalog.</div>
+      </div>
+
+      <div class="cart-summary">
+        <div style="font-weight:700;">Total</div>
+        <div id="cart-total">Rp 0</div>
+      </div>
+
+      <div style="margin-top:1rem;display:flex;gap:0.75rem;">
+        <a href="katalog.html" class="btn btn-ghost">Lanjut Belanja</a>
+        <a id="checkout-btn" href="pembayaran.html" class="btn btn-accent">Checkout</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="small text-muted">© 2026 EventLite — Semua hak dilindungi.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

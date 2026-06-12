@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kelola Pengguna — Admin EventLite</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+    .admin-sidebar{background:#071227;padding:1rem;border-right:1px solid rgba(255,255,255,0.05)}
+    .admin-sidebar a{display:block;color:var(--muted);padding:0.75rem 0.5rem;border-radius:6px;margin-bottom:0.25rem}
+    .admin-sidebar a.active,.admin-sidebar a:hover{background:rgba(99,102,241,0.15);color:#fff;font-weight:600}
+    .admin-main{padding:1.25rem}
+    .card{background:var(--card);padding:1.25rem;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    .table{width:100%;border-collapse:collapse;text-align:left}
+    .table th{border-bottom:2px solid rgba(255,255,255,0.1);padding:0.75rem;color:#fff}
+    .table td{border-bottom:1px solid rgba(255,255,255,0.05);padding:0.75rem;font-size:0.95rem}
+  </style>
+</head>
+<body style="background:var(--bg-dark); color:#E6EEF8;">
+  <header class="site-header">
+    <div class="container row" style="align-items:center; justify-content:space-between;">
+      <a href="home-customer.html" class="site-brand" style="font-weight:800;">EventLite</a>
+      <nav>
+        <a href="home-customer.html" style="margin-right:1rem;">Home</a>
+        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
+        <a href="kelola-produk.html" style="margin-right:1rem;">Admin</a>
+        <a class="btn btn-ghost" href="index.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-wrap">
+    <aside class="admin-sidebar">
+      <div style="font-weight:800;color:var(--accent);margin-bottom:1.5rem;font-size:1.2rem;padding-left:0.5rem;">EventLite Admin</div>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="kelola-artikel.html">Kelola Artikel</a>
+      <a href="kelola-produk.html">Kelola Produk</a>
+      <a href="kelola-pengguna.html" class="active">Kelola Pengguna</a>
+      <a href="kelola-transaksi.html">Kelola Transaksi</a>
+      <a href="history-transaksi.html">Riwayat</a>
+    </aside>
+
+    <main class="admin-main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+        <h2 style="margin:0;">Kelola Pengguna</h2>
+        <button class="btn btn-accent">+ Tambah Pengguna</button>
+      </div>
+
+      <div class="card">
+        <table class="table">
+          <thead>
+            <tr><th>Nama</th><th>Email</th><th>Peran</th><th>Tanggal Bergabung</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-weight:600;color:#fff;">Andi Pratama</td><td>andi@example.com</td><td>User</td><td>01 Jan 2025</td><td><button class="btn btn-primary">Edit</button></td></tr>
+            <tr><td style="font-weight:600;color:#fff;">Rina S</td><td>rina@example.com</td><td>Moderator</td><td>12 Mar 2025</td><td><button class="btn btn-primary">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+    <footer class="site-footer" style="margin-top:1rem;">
+      <div class="container">
+        <div class="small text-muted" style="color:rgba(255,255,255,0.65);">© 2026 EventLite — Semua hak dilindungi.</div>
+      </div>
+    </footer>
+</body>
+</html>

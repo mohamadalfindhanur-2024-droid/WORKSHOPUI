@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Welcome to EventLite — Masuk ke Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .login-container {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-box {
+      max-width: 440px;
+      width: 100%;
+      background: #ffffff;
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(15, 23, 42, 0.05);
+    }
+    .input-style {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.35rem;
+      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-style:focus {
+      border-color: var(--primary, #6366f1);
+    }
+    .btn-login {
+      width: 100%;
+      padding: 0.85rem;
+      font-size: 1rem;
+      font-weight: 700;
+      background: var(--primary, #6366f1);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: opacity 0.2s;
+    }
+    .btn-login:hover {
+      opacity: 0.9;
+    }
+    .hint-box {
+      margin-top: 1.5rem;
+      background: rgba(15, 23, 42, 0.03);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      border-left: 4px solid var(--accent, #f43f5e);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container row" style="align-items:center; justify-content:center;">
+      <div class="site-brand" style="font-size: 1.75rem;">EventLite</div>
+    </div>
+  </header>
+
+  <main class="container login-container">
+    <div class="login-box">
+      <h2 style="margin-top:0; margin-bottom: 0.5rem; text-align: center; font-size: 1.6rem;">Selamat Datang</h2>
+      <p class="text-muted small" style="text-align: center; margin-bottom: 1.5rem;">Silakan masukkan username simulasi Anda untuk menguji alur sistem.</p>
+      
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <label style="display: block; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem;">Username
+          <input type="text" id="username" placeholder="Masukkan 'alfin' atau 'admin'" required class="input-style">
+        </label>
+        
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem;">Kata Sandi
+          <input type="password" value="******" class="input-style" style="background: #f8fafc; cursor: not-allowed;" disabled>
+        </label>
+
+        <div id="error-msg" style="color: #ef4444; font-size: 0.8rem; margin-top: 0.5rem; display: none; font-weight: 600;">
+          ⚠️ Username salah! Gunakan 'alfin' atau 'admin'.
+        </div>
+
+        <button type="submit" class="btn-login">Masuk ke Portal</button>
+      </form>
+
+      <div class="hint-box">
+        <span style="font-weight: 700; color: #1e293b;">💡 Petunjuk Simulasi:</span>
+        <ul style="margin: 0.25rem 0 0 0; padding-left: 1.25rem; color: #475569; line-height: 1.4;">
+          <li>Ketik <strong style="color: var(--accent, #f43f5e);">alfin</strong> untuk masuk sebagai Customer.</li>
+          <li>Ketik <strong style="color: var(--primary, #6366f1);">admin</strong> untuk masuk sebagai Pengelola Platform.</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 1.5rem; text-align: center; font-size: 0.75rem; color: #94a3b8; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 1rem;">
+        © 2026 EventLite — Proyek UAS Workshop UI.
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function handleLogin(event) {
+      // Mencegah halaman refresh bawaan form
+      event.preventDefault();
+      
+      // Ambil nilai input username dan ubah ke huruf kecil semua biar ga sensitif caps lock
+      const userInputValue = document.getElementById('username').value.trim().toLowerCase();
+      const errorDiv = document.getElementById('error-msg');
+      
+      if (userInputValue === 'alfin') {
+        errorDiv.style.display = 'none';
+        // Mengarah ke halaman utama pembeli
+        window.location.href = 'home-customer.html';
+      } else if (userInputValue === 'admin') {
+        errorDiv.style.display = 'none';
+        // Mengarah ke panel kendali admin
+        window.location.href = 'dashboard.html';
+      } else {
+        // Tampilkan pesan error jika menginput selain alfin / admin
+        errorDiv.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>

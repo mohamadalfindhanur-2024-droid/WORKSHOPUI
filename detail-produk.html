@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Detail Konser — EventLite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container row" style="align-items:center; justify-content:space-between;">
+      <div class="site-brand">EventLite</div>
+      <nav>
+        <a href="home-customer.html" style="margin-right:1rem;">Home</a>
+        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
+        <a href="about.html" style="margin-right:1rem;">About</a>
+        <a class="btn btn-ghost" href="index.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mt-2">
+    <div class="row" style="gap:1.5rem; align-items:flex-start;">
+      <div style="flex:1 1 560px;">
+        <img src="https://via.placeholder.com/1200x600?text=Sheila+on+7+Surabaya+Banner" alt="Poster Sheila on 7" style="border-radius:12px;">
+        
+        <div class="mt-2 event-card">
+          <h1 class="title">Sheila on 7 — Tunggu Aku Di Surabaya</h1>
+          <div class="meta">05 Sep 2026 • Stadion Gelora Bung Tomo, Surabaya</div>
+          <p class="text-muted">Siapkan dirimu untuk bernostalgia bersama Duta, Eross, dan Adam! Konser tunggal "Tunggu Aku Di" akhirnya mendarat di Surabaya membawa sederet lagu hits legendaris yang siap dinyanyikan bersama puluhan ribu Sheila Gank. Pintu stadion dibuka mulai pukul 15.00 WIB.</p>
+        </div>
+
+        <div class="mt-2 event-card">
+          <h3 class="small" style="margin-bottom:0.5rem;">Denah Kursi (Seat Plan)</h3>
+          <img src="https://via.placeholder.com/1000x400?text=Denah+Kursi+GBT+Surabaya+[Festival+A+/+VIP]" alt="Denah Kursi GBT" style="border-radius:8px;">
+        </div>
+      </div>
+
+      <aside style="width:360px; max-width:100%;">
+        <div class="event-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="small text-muted">Pilih Kategori</div>
+              <div class="title">Beli Tiket</div>
+            </div>
+            <div class="small text-muted" style="color:var(--accent); font-weight:700;">Stok Terbatas</div>
+          </div>
+
+          <form id="ticket-form" class="mt-1">
+            <label style="display:block; margin-bottom:0.5rem; cursor:pointer;">
+              <input type="radio" name="kategori" value="VIP" data-price="900000"> VIP — Rp 900.000
+            </label>
+            <label style="display:block; margin-bottom:0.5rem; cursor:pointer;">
+              <input type="radio" name="kategori" value="Festival A" data-price="500000" checked> Festival A — Rp 500.000
+            </label>
+
+            <label style="display:block; margin:0.5rem 0;">Jumlah Tiket
+              <select id="ticket-qty" name="qty" style="display:block; width:100%; padding:0.6rem; margin-top:0.35rem; border-radius:10px; border:1px solid rgba(15,23,42,0.06);">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+
+            <div class="mt-1" id="ticket-summary" style="padding:0.75rem; border-radius:12px; background:rgba(99,102,241,0.08);">
+              <div class="small text-muted">Subtotal:</div>
+              <div id="ticket-total-price" style="font-weight:800; font-size:1.3rem;">Rp 500.000</div>
+              <div id="ticket-selected-info" class="small text-muted">1 tiket Festival A</div>
+            </div>
+
+            <div style="margin-top:0.75rem;">
+              <a href="keranjang.html" id="buy-now" class="btn btn-accent" style="width:100%; padding:0.85rem; font-size:1rem; text-align:center;">Beli Tiket Sekarang</a>
+            </div>
+          </form>
+        </div>
+
+        <div class="mt-1 small text-muted">Harga sudah termasuk biaya layanan platform EventLite.</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="small text-muted">© 2026 EventLite — Semua hak dilindungi.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

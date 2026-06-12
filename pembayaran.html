@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pembayaran — EventLite</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .payment-wrap{display:grid;grid-template-columns:1fr 380px;gap:1rem;margin-top:1rem}
+    .card{background:var(--card);padding:1rem;border-radius:10px}
+    .methods button{display:block;width:100%;padding:0.75rem;margin-bottom:0.5rem;text-align:left}
+    #payment-preview{display:none;padding:0.75rem;border-radius:8px;margin-top:0.5rem}
+    .order-item{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(0,0,0,0.04)}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container row" style="align-items:center; justify-content:space-between;">
+      <a href="home-customer.html" class="site-brand" style="font-weight:800;">EventLite</a>
+      <nav>
+        <a href="home-customer.html" style="margin-right:1rem;">Home</a>
+        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
+          <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
+          <a href="keranjang.html" style="margin-right:1rem;">Keranjang</a>
+        <a class="btn btn-ghost" href="index.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Pembayaran</h2>
+    <div class="payment-wrap">
+      <div class="card">
+        <h3>Metode Pembayaran</h3>
+        <div id="payment-methods" class="methods">
+          <button data-method="qris" class="btn">QRIS</button>
+          <button data-method="va" class="btn">Virtual Account</button>
+        </div>
+        <div id="payment-preview" class="card"></div>
+        <div style="margin-top:1rem;text-align:right;">
+          <button id="pay-now" class="btn btn-accent">Bayar Sekarang</button>
+        </div>
+      </div>
+
+      <aside class="card">
+        <h3>Ringkasan Pesanan</h3>
+        <div id="order-summary"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:0.75rem;font-weight:800;">
+          <div>Total</div>
+          <div id="order-total">Rp 0</div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="small text-muted">© 2026 EventLite — Semua hak dilindungi.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // render order summary from cart
+    (function(){
+      function formatCurrency(amount){ return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+      try{
+        var raw = sessionStorage.getItem('eventliteCart');
+        var summary = document.getElementById('order-summary');
+        var totalEl = document.getElementById('order-total');
+        var total = 0;
+        if (!raw || !summary) return;
+        var cart = JSON.parse(raw);
+        if (!cart || cart.length===0){ summary.innerHTML='<div class="small text-muted">Tidak ada item di keranjang.</div>'; totalEl.textContent='Rp 0'; return; }
+        summary.innerHTML='';
+        cart.forEach(function(it){
+          var row = document.createElement('div'); row.className='order-item';
+          row.innerHTML = '<div><div style="font-weight:700">'+it.name+'</div><div class="small text-muted">'+it.category+' × '+it.quantity+'</div></div>' + '<div style="font-weight:800">'+formatCurrency(it.totalPrice)+'</div>';
+          summary.appendChild(row);
+          total += (parseInt(it.totalPrice,10)||0);
+        });
+        totalEl.textContent = formatCurrency(total);
+      } catch(e){ console.error(e); }
+    })();
+  </script>
+</body>
+</html>

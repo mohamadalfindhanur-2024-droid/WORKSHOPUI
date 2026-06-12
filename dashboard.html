@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Dashboard — EventLite</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Admin dark theme overrides */
+    :root { 
+      --bg-light: #0F172A; 
+      --card: #0b1220; 
+      --text: #E6EEF8; 
+      --muted: #9AA6B2; 
+      --primary: #6366F1; /* Disamakan dengan Indigo EventLite */
+    }
+    body { background: var(--bg-light); color: var(--text); }
+    .admin-wrap { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+    .admin-sidebar { background: #071227; padding: 1rem; border-right: 1px solid rgba(255,255,255,0.05); }
+    .admin-sidebar a { display: block; color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 6px; margin-bottom: 0.25rem; transition: all 0.2s ease; }
+    .admin-sidebar a.active, .admin-sidebar a:hover { background: rgba(99,102,241,0.15); color: #ffffff; font-weight: 600; }
+    .admin-main { padding: 1.25rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; }
+    .stat-card { background: var(--card); padding: 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03); }
+    .chart { height: 200px; background: linear-gradient(90deg, rgba(99,102,241,0.15), rgba(244,63,94,0.08)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--muted); border: 1px dashed rgba(255,255,255,0.1); }
+    @media(max-width:900px) { 
+      .stats-grid { grid-template-columns: repeat(2, 1fr); } 
+      .admin-wrap { grid-template-columns: 1fr; } 
+      .admin-sidebar { display: flex; gap: 0.5rem; overflow: auto; padding: 0.75rem; }
+      .admin-sidebar a { white-space: nowrap; margin-bottom: 0; }
+      .admin-sidebar div { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <aside class="admin-sidebar">
+      <div style="font-weight:800; color:var(--accent); margin-bottom:1.5rem; font-size:1.2rem; padding-left:0.5rem;">EventLite Admin</div>
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="kelola-artikel.html">Kelola Artikel</a>
+      <a href="kelola-produk.html">Kelola Produk</a>
+      <a href="kelola-pengguna.html">Kelola Pengguna</a>
+      <a href="kelola-transaksi.html">Kelola Transaksi</a>
+      <a href="history-transaksi.html">Riwayat</a>
+      <a href="index.html" style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">Lihat Situs</a>
+    </aside>
+
+    <main class="admin-main">
+      <h2 style="margin-top:0; margin-bottom: 1.25rem;">Ringkasan Dashboard</h2>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="small text-muted" style="margin-bottom:0.25rem;">Total Pendapatan</div>
+          <div style="font-weight:800; font-size:1.35rem; color:#4ade80;">Rp 148.500.000</div>
+        </div>
+        <div class="stat-card">
+          <div class="small text-muted" style="margin-bottom:0.25rem;">Tiket Terjual</div>
+          <div style="font-weight:800; font-size:1.35rem;">324 / 1.000</div>
+        </div>
+        <div class="stat-card">
+          <div class="small text-muted" style="margin-bottom:0.25rem;">Jumlah User</div>
+          <div style="font-weight:800; font-size:1.35rem;">1.420</div>
+        </div>
+        <div class="stat-card">
+          <div class="small text-muted" style="margin-bottom:0.25rem;">Transaksi Hari Ini</div>
+          <div style="font-weight:800; font-size:1.35rem; color:var(--accent);">42</div>
+        </div>
+      </div>
+
+      <section style="display:grid; grid-template-columns: 2fr 1fr; gap:1rem;">
+        <div>
+          <div class="stat-card">
+            <div class="small text-muted" style="margin-bottom:0.5rem;">Grafik Penjualan Tiket (7 Hari Terakhir)</div>
+            <div class="chart">[ Grafik Tren War Tiket - Live View ]</div>
+          </div>
+        </div>
+        <div>
+          <div class="stat-card">
+            <div class="small text-muted" style="margin-bottom:0.5rem;">Top Event Terlaris</div>
+            <ul style="margin:0; padding:0; list-style:none;">
+              <li class="mt-1" style="padding: 0.25rem 0;">🔥 Sheila on 7 (Sby) — 180 tiket</li>
+              <li class="mt-1" style="padding: 0.25rem 0;">⭐ Java Jazz (Jkt) — 94 tiket</li>
+              <li class="mt-1" style="padding: 0.25rem 0;">⭐ Kahitna (Bdg) — 50 tiket</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

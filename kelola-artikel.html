@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kelola Artikel — Admin EventLite</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root{ 
+      --bg-light: #0F172A; 
+      --card:#0b1220; 
+      --text:#E6EEF8; 
+      --muted:#9AA6B2; 
+      --primary:#6366F1; /* Diselaraskan dengan Indigo EventLite */
+    }
+    body{ background:var(--bg-light); color:var(--text); }
+    .admin-wrap{ display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+    .admin-sidebar{ background:#071227; padding:1rem; border-right: 1px solid rgba(255,255,255,0.05); }
+    .admin-sidebar a { display: block; color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 6px; margin-bottom: 0.25rem; transition: all 0.2s ease; }
+    .admin-sidebar a.active, .admin-sidebar a:hover { background: rgba(99,102,241,0.15); color: #ffffff; font-weight: 600; }
+    .admin-main{ padding:1.25rem; }
+    .card{ background:var(--card); padding:1.25rem; border-radius:10px; box-shadow:var(--shadow-sm); border: 1px solid rgba(255,255,255,0.03); overflow-x: auto; }
+    .table{ width:100%; border-collapse:collapse; text-align: left; }
+    .table th { border-bottom: 2px solid rgba(255,255,255,0.1); padding: 0.75rem; color: #ffffff; }
+    .table td{ border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.75rem; font-size: 0.95rem; }
+    @media(max-width:900px){ 
+      .admin-wrap{ grid-template-columns:1fr; } 
+      .admin-sidebar{ display:flex; gap:0.5rem; overflow:auto; padding: 0.75rem; }
+      .admin-sidebar a { white-space:nowrap; margin-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <aside class="admin-sidebar">
+      <div style="font-weight:800; color:var(--accent); margin-bottom:1.5rem; font-size:1.2rem; padding-left:0.5rem;">EventLite Admin</div>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="kelola-artikel.html" class="active">Kelola Artikel</a>
+      <a href="kelola-produk.html">Kelola Produk</a>
+      <a href="kelola-pengguna.html">Kelola Pengguna</a>
+      <a href="kelola-transaksi.html">Kelola Transaksi</a>
+    </aside>
+
+    <main class="admin-main">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2 style="margin:0;">Kelola Artikel</h2>
+        <button class="btn btn-accent" style="padding: 10px 20px;">Tambah Artikel Baru</button>
+      </div>
+
+      <div class="card">
+        <table class="table">
+          <thead>
+            <tr><th>Judul Artikel</th><th>Kategori</th><th>Tanggal Rilis</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight: 600; color:#fff;">Tips Menang War Tiket Konser Musik</td>
+              <td>Tips</td>
+              <td>12 Agustus 2026</td>
+              <td><button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.85rem;">Edit</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 600; color:#fff;">Rundown Festival Musik Pekan Ini</td>
+              <td>Berita</td>
+              <td>09 Agustus 2026</td>
+              <td><button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.85rem;">Edit</button></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 600; color:#fff;">Cara Menghindari Penipuan Tiket Konser online</td>
+              <td>Keamanan</td>
+              <td>02 Agustus 2026</td>
+              <td><button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.85rem;">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>
