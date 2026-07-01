@@ -6,41 +6,43 @@
   <title>Kelola Transaksi — Admin EventLite</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .admin-wrap{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
-    .admin-sidebar{background:#071227;padding:1rem;border-right:1px solid rgba(255,255,255,0.05)}
-    .admin-sidebar a{display:block;color:var(--muted);padding:0.75rem 0.5rem;border-radius:6px;margin-bottom:0.25rem}
-    .admin-sidebar a.active,.admin-sidebar a:hover{background:rgba(99,102,241,0.15);color:#fff;font-weight:600}
-    .admin-main{padding:1.25rem}
-    .card{background:var(--card);padding:1.25rem;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .table{width:100%;border-collapse:collapse;text-align:left}
-    .table th{border-bottom:2px solid rgba(255,255,255,0.1);padding:0.75rem;color:#fff}
-    .table td{border-bottom:1px solid rgba(255,255,255,0.05);padding:0.75rem;font-size:0.95rem}
+    :root{ 
+      --bg-light: #0F172A; 
+      --card:#0b1220; 
+      --text:#E6EEF8; 
+      --muted:#9AA6B2; 
+      --primary:#6366F1;
+    }
+    body{ background:var(--bg-light); color:var(--text); }
+    .admin-wrap{ display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+    .admin-sidebar{ background:#071227; padding:1rem; border-right: 1px solid rgba(255,255,255,0.05); }
+    .admin-sidebar a { display: block; color: var(--muted); padding: 0.75rem 0.5rem; border-radius: 6px; margin-bottom: 0.25rem; transition: all 0.2s ease; }
+    .admin-sidebar a.active, .admin-sidebar a:hover { background: rgba(99,102,241,0.15); color: #ffffff; font-weight: 600; }
+    .admin-main{ padding:1.25rem; }
+    .card{ background:var(--card); padding:1.25rem; border-radius:10px; box-shadow:var(--shadow-sm); border: 1px solid rgba(255,255,255,0.03); overflow-x: auto; }
+    .table{ width:100%; border-collapse:collapse; text-align: left; }
+    .table th { border-bottom: 2px solid rgba(255,255,255,0.1); padding: 0.75rem; color: #ffffff; }
+    .table td{ border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.75rem; font-size: 0.95rem; }
     .status-success{background:#16A34A;color:#fff;padding:4px 8px;border-radius:8px;font-weight:700}
     .status-pending{background:#F59E0B;color:#fff;padding:4px 8px;border-radius:8px;font-weight:700}
+    @media(max-width:900px){ 
+      .admin-wrap{ grid-template-columns:1fr; } 
+      .admin-sidebar{ display:flex; gap:0.5rem; overflow:auto; padding: 0.75rem; }
+      .admin-sidebar a { white-space:nowrap; margin-bottom: 0; }
+    }
   </style>
 </head>
-<body style="background:var(--bg-dark); color:#E6EEF8;">
-  <header class="site-header">
-    <div class="container row" style="align-items:center; justify-content:space-between;">
-      <a href="home-customer.html" class="site-brand" style="font-weight:800;">EventLite</a>
-      <nav>
-        <a href="home-customer.html" style="margin-right:1rem;">Home</a>
-        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
-        <a href="kelola-produk.html" style="margin-right:1rem;">Admin</a>
-        <a class="btn btn-ghost" href="index.html">Logout</a>
-      </nav>
-    </div>
-  </header>
+<body>
 
   <div class="admin-wrap">
     <aside class="admin-sidebar">
-      <div style="font-weight:800;color:var(--accent);margin-bottom:1.5rem;font-size:1.2rem;padding-left:0.5rem;">EventLite Admin</div>
+      <div style="font-weight:800; color:var(--accent); margin-bottom:1.5rem; font-size:1.2rem; padding-left:0.5rem;">EventLite Admin</div>
       <a href="dashboard.html">Dashboard</a>
       <a href="kelola-artikel.html">Kelola Artikel</a>
       <a href="kelola-produk.html">Kelola Produk</a>
       <a href="kelola-pengguna.html">Kelola Pengguna</a>
       <a href="kelola-transaksi.html" class="active">Kelola Transaksi</a>
-      <a href="history-transaksi.html">Riwayat</a>
+      <a href="index.html" style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">Keluar ke Situs</a>
     </aside>
 
     <main class="admin-main">
@@ -62,10 +64,5 @@
 
     </main>
   </div>
-    <footer class="site-footer" style="margin-top:1rem;">
-      <div class="container">
-        <div class="small text-muted" style="color:rgba(255,255,255,0.65);">© 2026 EventLite — Semua hak dilindungi.</div>
-      </div>
-    </footer>
 </body>
 </html>

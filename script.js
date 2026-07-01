@@ -15,14 +15,32 @@
         clearInterval(interval);
         display.textContent = "00:00";
         var btn = document.querySelector('.cart-summary .btn-accent');
-        if (btn) btn.textContent = 'Waktu Habis';
+        if (btn) {
+          btn.textContent = 'Waktu Habis';
+          try { btn.disabled = true; } catch(e) {}
+          btn.classList.add('disabled');
+        }
+        // Kosongkan keranjang otomatis ketika waktu habis
+        try {
+          saveCart([]);
+          sessionStorage.removeItem('eventliteCartItem');
+          sessionStorage.removeItem('eventlitePurchase');
+        } catch (e) { /* ignore */ }
+        // Perbarui tampilan keranjang jika sedang dihalaman keranjang
+        try { if (typeof renderCart === 'function') renderCart(); } catch(e){}
+        var emptyMsg = document.getElementById('cart-empty-msg');
+        if (emptyMsg) {
+          emptyMsg.textContent = 'Waktu reservasi habis — keranjang dikosongkan.';
+        } else {
+          try { alert('Waktu reservasi habis — keranjang dikosongkan.'); } catch(e){}
+        }
       }
     }, 1000);
   }
 
   // Jalankan hitung mundur 10 menit jika elemen countdown ditemukan
   if (document.getElementById('countdown')){
-    startCountdown(10 * 60, 'countdown');
+    startCountdown(15 * 60, 'countdown');
   }
 
   // 2. Handler Modal E-Ticket untuk halaman history-transaksi.html
@@ -103,29 +121,65 @@
     document.getElementById('payment-methods').addEventListener('click', function(e){
       var btn = e.target.closest('button[data-method]');
       if (!btn) return;
+      
+      // Toggle active visual indicator classes
+      var buttons = this.querySelectorAll('button[data-method]');
+      buttons.forEach(function(b){ b.classList.remove('active-method'); });
+      btn.classList.add('active-method');
+      
       var method = btn.getAttribute('data-method');
       var preview = document.getElementById('payment-preview');
       if (!preview) return;
-      preview.style.display = '';
+      preview.style.display = 'block';
       preview.innerHTML = '';
       if (method === 'qris'){
-        preview.innerHTML = '<div style="text-align:center;"><img src="https://via.placeholder.com/220x220?text=QRIS" alt="QRIS"><div class="small text-muted">Scan QRIS untuk membayar</div></div>';
+        preview.innerHTML = '<div style="text-align:center;"><img src="images/ticket_qr.png" alt="QRIS" style="width:180px;height:180px;margin:0 auto 0.5rem auto;display:block;border-radius:8px;"><div class="small text-muted">Scan QRIS untuk membayar</div></div>';
       } else if (method === 'va'){
-        preview.innerHTML = '<div class="small text-muted">Virtual Account:</div><div style="font-weight:800; font-size:1.1rem;">1234 5678 9012 3456 (Bank Mandiri)</div><div class="small text-muted mt-1">Sertakan nomor transaksi sebagai referensi.</div>';
+        preview.innerHTML = '<div class="small text-muted">Virtual Account:</div><div style="font-weight:800; font-size:1.2rem; color: #fff; margin: 0.25rem 0 0.5rem 0;">1234 5678 9012 3456 (Bank Mandiri)</div><div class="small text-muted">Sertakan nomor transaksi sebagai referensi pembayaran.</div>';
       }
     });
+
+    // Auto-select QRIS on load to display QR code instantly
+    var defaultBtn = document.querySelector('button[data-method="qris"]');
+    if (defaultBtn) {
+      defaultBtn.click();
+    }
 
     // Perbaikan selektor pengalihan form bayar agar aman
     var payNowBtn = document.getElementById('pay-now');
     if (payNowBtn) {
       payNowBtn.addEventListener('click', function(e){
         var preview = document.getElementById('payment-preview');
+        var result = document.getElementById('payment-result');
         if (!preview || preview.innerHTML.trim()===''){
-          e.preventDefault(); // Mencegah pindah halaman jika belum pilih metode
+          e.preventDefault();
           alert('Pilih metode pembayaran terlebih dahulu.');
           return;
         }
-        alert('Pembayaran diproses — mengalihkan ke halaman riwayat.');
+        // Selesaikan pembayaran di halaman ini dan tampilkan konfirmasi
+        e.preventDefault();
+        if (result) {
+          result.style.display = 'block';
+          result.innerHTML = 'Pembayaran berhasil! Tiket Anda sudah dibayar dan akan muncul di riwayat transaksi.' +
+            ' <a href="history-transaksi.html" style="font-weight:700; color: var(--primary);">Lihat Riwayat</a>';
+        }
+        // Kosongkan keranjang karena transaksi selesai
+        saveCart([]);
+        try { clearReservationExpiry(); } catch(e){}
+        // Perbarui ringkasan pesanan jika sedang dilihat di halaman pembayaran
+        var orderSummary = document.getElementById('order-summary');
+        var orderTotal = document.getElementById('order-total');
+        if (orderSummary) orderSummary.innerHTML = '<div class="small text-muted">Pembayaran berhasil. Jika ini pembelian langsung, keranjang tidak berubah.</div>';
+        if (orderTotal) orderTotal.textContent = 'Rp 0';
+        var purchase = sessionStorage.getItem('eventlitePurchase');
+        var sourceIsCart = window.location.search.indexOf('source=cart') !== -1;
+        if (purchase && !sourceIsCart){
+          sessionStorage.removeItem('eventlitePurchase');
+        } else if (sourceIsCart){
+          saveCart([]);
+        }
+        payNowBtn.textContent = 'Pembayaran Selesai';
+        payNowBtn.disabled = true;
       });
     }
   }
@@ -133,6 +187,71 @@
   // Helper formats
   function formatCurrency(amount) {
     return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  // Reservation expiry helpers (persist across pages and logout)
+  function getReservationExpiry(){
+    var raw = localStorage.getItem('eventliteReservationExpiry');
+    if (!raw) return null;
+    var v = parseInt(raw,10);
+    return isNaN(v) ? null : v;
+  }
+  function setReservationExpiry(secondsFromNow){
+    var ts = Date.now() + (secondsFromNow * 1000);
+    try { localStorage.setItem('eventliteReservationExpiry', String(ts)); } catch(e){}
+    return ts;
+  }
+  function clearReservationExpiry(){ try { localStorage.removeItem('eventliteReservationExpiry'); } catch(e){} }
+
+  function handleExpiry(){
+    var display = document.getElementById('countdown');
+    if (display) display.textContent = '00:00';
+    var btn = document.querySelector('.cart-summary .btn-accent');
+    if (btn) { try{ btn.textContent = 'Waktu Habis'; btn.disabled = true; btn.classList.add('disabled'); } catch(e){} }
+    try { saveCart([]); sessionStorage.removeItem('eventliteCartItem'); sessionStorage.removeItem('eventlitePurchase'); } catch(e){}
+    clearReservationExpiry();
+    try { if (typeof renderCart === 'function') renderCart(); } catch(e){}
+    var emptyMsg = document.getElementById('cart-empty-msg');
+    if (emptyMsg) {
+      emptyMsg.textContent = 'Waktu reservasi habis — keranjang dikosongkan.';
+    } else {
+      try { alert('Waktu reservasi habis — keranjang dikosongkan.'); } catch(e){}
+    }
+  }
+
+  // Start countdown; if displayId is 'countdown' we use persisted expiry if present
+  function startCountdown(durationSeconds, displayId) {
+    var display = document.getElementById(displayId);
+    if (!display) return;
+    var timer;
+    if (displayId === 'countdown'){
+      var expiry = getReservationExpiry();
+      var cart = getCart();
+      if (!expiry){
+        // only create expiry when there are items in cart
+        if (!cart || cart.length === 0){ display.textContent = '00:00'; return; }
+        expiry = setReservationExpiry(durationSeconds);
+      }
+      timer = Math.floor((expiry - Date.now())/1000);
+    } else {
+      timer = durationSeconds;
+    }
+
+    var minutes, seconds;
+    function tick(){
+      if (timer <= 0) { handleExpiry(); return; }
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      display.textContent = minutes + ":" + seconds;
+      timer--;
+    }
+    tick();
+    var interval = setInterval(function(){
+      if (timer <= 0){ clearInterval(interval); handleExpiry(); return; }
+      tick();
+    }, 1000);
   }
 
 function getTicketDetails() {
@@ -203,8 +322,9 @@ function getTicketDetails() {
   }
 
   function saveCart(cart){ sessionStorage.setItem('eventliteCart', JSON.stringify(cart||[])); }
+  function savePurchase(details){ if (!details) return; sessionStorage.setItem('eventlitePurchase', JSON.stringify(details)); }
 
-  function addToCart(details){ if (!details) return; var cart = getCart(); var found = cart.find(function(i){ return i.name===details.name && i.category===details.category; }); if (found){ found.quantity = (parseInt(found.quantity,10)||0) + (parseInt(details.quantity,10)||0); found.totalPrice = found.unitPrice * found.quantity; } else { cart.push(details); } saveCart(cart); }
+  function addToCart(details){ if (!details) return; var cart = getCart(); var found = cart.find(function(i){ return i.name===details.name && i.category===details.category; }); if (found){ found.quantity = (parseInt(found.quantity,10)||0) + (parseInt(details.quantity,10)||0); found.totalPrice = found.unitPrice * found.quantity; } else { cart.push(details); } saveCart(cart); try { if (!getReservationExpiry()) setReservationExpiry(15*60); } catch(e){} }
 
   // Render multi-item cart into keranjang.html
   function renderCart() {
@@ -217,9 +337,14 @@ function getTicketDetails() {
       var empty = document.createElement('div'); empty.className='cart-empty'; empty.textContent='Keranjang kosong. Tambah tiket dari katalog.'; container.appendChild(empty); if (cartTotalEl) cartTotalEl.textContent='Rp 0'; return;
     }
     var list = document.createElement('div'); list.className='cart-items-list';
+    function getEventImage(name) {
+      if (name.indexOf('Java Jazz') !== -1) return 'images/java_jazz.png';
+      if (name.indexOf('Kahitna') !== -1) return 'images/kahitna.png';
+      return 'images/sheila_on_7.png';
+    }
     cart.forEach(function(item, idx){
       var row = document.createElement('div'); row.className='cart-row'; row.dataset.index = idx;
-      row.innerHTML = '<div style="display:flex;gap:0.75rem;align-items:center;"><img src="https://via.placeholder.com/80x60?text=ticket" style="width:80px;height:60px;object-fit:cover;border-radius:6px;">'
+      row.innerHTML = '<div style="display:flex;gap:0.75rem;align-items:center;"><img src="'+getEventImage(item.name)+'" style="width:80px;height:60px;object-fit:cover;border-radius:6px;">'
         + '<div><div style="font-weight:700;">'+item.name+'</div><div class="small text-muted">'+item.category+'</div></div></div>'
         + '<div style="display:flex;align-items:center;gap:0.5rem;">'
         + '<button class="qty-decrease">-</button><div class="qty" style="min-width:28px;text-align:center;">'+item.quantity+'</div><button class="qty-increase">+</button></div>'
@@ -276,15 +401,24 @@ function getTicketDetails() {
 
     buyBtn.addEventListener('click', function(){
       var details = getTicketDetails();
+      savePurchase(details);
+      window.location.href = 'pembayaran.html?source=direct';
+    });
+  }
+
+  var addToCartBtn = document.getElementById('add-to-cart');
+  if (addToCartBtn){
+    addToCartBtn.addEventListener('click', function(){
+      var details = getTicketDetails();
       addToCart(details);
-      window.location.href = 'keranjang.html';
+      alert('Tiket berhasil ditambahkan ke keranjang.');
     });
   }
 
   if (document.getElementById('cart-items')){
     // render modern multi-item cart
     renderCart();
-    if (document.getElementById('countdown')) startCountdown(10*60,'countdown');
+    if (document.getElementById('countdown')) startCountdown(15*60,'countdown');
     // checkout guard (link already points to pembayaran.html)
     var checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn){

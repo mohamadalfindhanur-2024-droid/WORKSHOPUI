@@ -7,23 +7,26 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .grid-articles { display:grid; grid-template-columns:1fr; gap:1rem; }
-    .article-card { background:#ffffff; padding:1.25rem; border-radius:12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .article-card .excerpt { color:var(--text-muted); margin-top: 0.5rem; font-size: 0.9rem; }
+    .article-card { background: var(--card); padding: 1.25rem; border-radius: 12px; box-shadow: var(--shadow-sm); }
+    .article-card .excerpt { color: var(--muted); margin-top: 0.5rem; font-size: 0.9rem; }
     @media (min-width:600px){ .grid-articles{ grid-template-columns: repeat(2, 1fr); } }
     @media (min-width:1000px){ .grid-articles{ grid-template-columns: repeat(3, 1fr); } }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <div class="container row" style="align-items:center; justify-content:space-between;">
-      <div class="site-brand">EventLite</div>
-      <nav>
-        <a href="index.html" style="margin-right:1rem;">Home</a>
-        <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
-        <a class="btn btn-ghost" href="login.html">Login</a>
-      </nav>
-    </div>
-  </header>
+     <div class="container row" style="align-items:center; justify-content:space-between;">
+       <a href="home-customer.html" class="site-brand" style="text-decoration: none; color: inherit; font-weight: 800;">EventLite</a>
+       <nav>
+         <a href="home-customer.html" style="margin-right:1rem;">Home</a>
+         <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
+         <a href="wordpress/" style="margin-right:1rem;" class="active">Artikel</a>
+         <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
+         <a href="keranjang.html" style="margin-right:1rem;">Keranjang</a>
+         <a class="btn btn-ghost" href="index.html">Logout</a>
+       </nav>
+     </div>
+   </header>
 
   <main class="container mt-2" style="min-height: 75vh;">
     <h2>Arsip Artikel</h2>

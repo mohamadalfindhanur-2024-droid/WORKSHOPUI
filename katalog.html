@@ -7,8 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* Layout: sidebar + catalog */
-    .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 1rem; align-items: start; margin-top: 1rem; }
-    .about-sidebar { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow-sm); }
+    .catalog-layout { margin-top: 1rem; }
 
     /* Catalog grid */
     .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
@@ -32,6 +31,7 @@
       <nav>
         <a href="home-customer.html" style="margin-right:1rem;">Home</a>
         <a href="katalog.html" style="margin-right:1rem;" class="active">Katalog</a>
+        <a href="wordpress/" style="margin-right:1rem;">Artikel</a>
         <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
         <a href="keranjang.html" style="margin-right:1rem;">Keranjang</a>
         <a class="btn btn-ghost" href="index.html">Logout</a>
@@ -44,16 +44,10 @@
     <p class="text-muted small">Cari dan temukan tiket konser impianmu di Indonesia dengan penawaran terbaik.</p>
 
     <div class="catalog-layout">
-      <aside class="about-sidebar">
-        <h3>About EventLite</h3>
-        <p class="small text-muted">EventLite adalah platform tiket konser lokal yang menghadirkan pengalaman mudah dan aman. Temukan acara, pilih kategori tiket, dan bayar langsung.</p>
-        <p class="small" style="margin-top:0.75rem;"><a href="about.html">Tentang EventLite</a></p>
-      </aside>
-
       <section class="catalog-grid">
 
       <div class="event-card">
-        <img src="https://via.placeholder.com/800x450?text=Sheila+on+7+Surabaya" alt="Sheila on 7">
+        <img src="images/sheila_on_7.png" alt="Sheila on 7">
         <div class="title">Sheila on 7 — Tunggu Aku Di Surabaya</div>
         <div class="meta small text-muted">📍 Surabaya • 05 Sep 2026</div>
         <div class="price">Rp 500.000</div>
@@ -64,7 +58,7 @@
       </div>
 
       <div class="event-card">
-        <img src="https://via.placeholder.com/800x450?text=Java+Jazz+Festival" alt="Java Jazz">
+        <img src="images/java_jazz.png" alt="Java Jazz">
         <div class="title">Java Jazz Festival 2026</div>
         <div class="meta small text-muted">📍 Jakarta • 21 Agu 2026</div>
         <div class="price">Rp 950.000</div>
@@ -75,7 +69,7 @@
       </div>
 
       <div class="event-card">
-        <img src="https://via.placeholder.com/800x450?text=Kahitna+Tour" alt="Kahitna">
+        <img src="images/kahitna.png" alt="Kahitna">
         <div class="title">Kahitna 40 Years Anniversary Tour</div>
         <div class="meta small text-muted">📍 Bandung • 12 Jul 2026</div>
         <div class="price">Rp 450.000</div>

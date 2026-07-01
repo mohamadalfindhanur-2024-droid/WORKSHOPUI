@@ -6,22 +6,63 @@
   <title>Pembayaran — EventLite</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .payment-wrap{display:grid;grid-template-columns:1fr 380px;gap:1rem;margin-top:1rem}
-    .card{background:var(--card);padding:1rem;border-radius:10px}
-    .methods button{display:block;width:100%;padding:0.75rem;margin-bottom:0.5rem;text-align:left}
-    #payment-preview{display:none;padding:0.75rem;border-radius:8px;margin-top:0.5rem}
-    .order-item{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(0,0,0,0.04)}
+    .payment-wrap{display:grid;grid-template-columns:1fr 380px;gap:1.5rem;margin-top:1.5rem}
+    .card{background:var(--card);padding:1.5rem;border-radius:12px;border: 1px solid rgba(255,255,255,0.03);box-shadow: var(--shadow-sm);}
+    .methods button{
+      display:block;
+      width:100%;
+      padding:1rem;
+      margin-bottom:0.75rem;
+      text-align:left;
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+    .methods button:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .methods button.active-method {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+    }
+    #payment-preview{display:none;padding:1.25rem;border-radius:10px;margin-top:1rem;background: var(--bg-dark);border: 1px solid rgba(255,255,255,0.03);}
+    .order-item{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+    
+    @media (max-width: 768px) {
+      .payment-wrap {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .payment-wrap > .card {
+        order: 2;
+      }
+      .payment-wrap > aside {
+        order: 1;
+      }
+      .card {
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container row" style="align-items:center; justify-content:space-between;">
-      <a href="home-customer.html" class="site-brand" style="font-weight:800;">EventLite</a>
+      <a href="home-customer.html" class="site-brand" style="text-decoration: none; color: inherit; font-weight: 800;">EventLite</a>
       <nav>
         <a href="home-customer.html" style="margin-right:1rem;">Home</a>
         <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
-          <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
-          <a href="keranjang.html" style="margin-right:1rem;">Keranjang</a>
+        <a href="wordpress/" style="margin-right:1rem;">Artikel</a>
+        <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
+        <a href="keranjang.html" style="margin-right:1rem;">Keranjang</a>
         <a class="btn btn-ghost" href="index.html">Logout</a>
       </nav>
     </div>
@@ -37,6 +78,7 @@
           <button data-method="va" class="btn">Virtual Account</button>
         </div>
         <div id="payment-preview" class="card"></div>
+        <div id="payment-result" class="small text-muted" style="margin-top:1rem; display:none;"></div>
         <div style="margin-top:1rem;text-align:right;">
           <button id="pay-now" class="btn btn-accent">Bayar Sekarang</button>
         </div>
@@ -62,18 +104,42 @@
 
   <script src="script.js"></script>
   <script>
-    // render order summary from cart
+    // render order summary from direct purchase or cart
     (function(){
       function formatCurrency(amount){ return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
       try{
-        var raw = sessionStorage.getItem('eventliteCart');
+        var query = new URLSearchParams(window.location.search);
+        var source = query.get('source');
         var summary = document.getElementById('order-summary');
         var totalEl = document.getElementById('order-total');
+        if (!summary || !totalEl) return;
+
+        var cart = [];
+        if (source === 'cart') {
+          var rawCart = sessionStorage.getItem('eventliteCart');
+          if (rawCart) {
+            try { cart = JSON.parse(rawCart) || []; } catch (e) { cart = []; }
+          }
+        } else {
+          var rawPurchase = sessionStorage.getItem('eventlitePurchase');
+          if (rawPurchase) {
+            try { cart = [JSON.parse(rawPurchase)]; } catch (e) { cart = []; }
+          } else {
+            var rawCart = sessionStorage.getItem('eventliteCart');
+            if (rawCart) {
+              try { cart = JSON.parse(rawCart) || []; } catch (e) { cart = []; }
+            }
+          }
+        }
+
+        if (!cart || cart.length===0){
+          summary.innerHTML = '<div class="small text-muted">Tidak ada item pada pesanan saat ini.</div>';
+          totalEl.textContent = 'Rp 0';
+          return;
+        }
+
+        summary.innerHTML = '';
         var total = 0;
-        if (!raw || !summary) return;
-        var cart = JSON.parse(raw);
-        if (!cart || cart.length===0){ summary.innerHTML='<div class="small text-muted">Tidak ada item di keranjang.</div>'; totalEl.textContent='Rp 0'; return; }
-        summary.innerHTML='';
         cart.forEach(function(it){
           var row = document.createElement('div'); row.className='order-item';
           row.innerHTML = '<div><div style="font-weight:700">'+it.name+'</div><div class="small text-muted">'+it.category+' × '+it.quantity+'</div></div>' + '<div style="font-weight:800">'+formatCurrency(it.totalPrice)+'</div>';

@@ -15,11 +15,12 @@
     .login-box {
       max-width: 440px;
       width: 100%;
-      background: #ffffff;
+      background: var(--card, #1E293B);
       padding: 2.5rem 2rem;
       border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(15, 23, 42, 0.05);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text, #F1F5F9);
     }
     .input-style {
       display: block;
@@ -27,7 +28,9 @@
       padding: 0.75rem;
       margin-top: 0.35rem;
       border-radius: 10px;
-      border: 1px solid rgba(15, 23, 42, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 23, 42, 0.3);
+      color: #ffffff;
       font-size: 0.95rem;
       outline: none;
       transition: border-color 0.2s;
@@ -53,11 +56,12 @@
     }
     .hint-box {
       margin-top: 1.5rem;
-      background: rgba(15, 23, 42, 0.03);
+      background: rgba(255, 255, 255, 0.03);
       padding: 0.75rem 1rem;
       border-radius: 8px;
       font-size: 0.8rem;
       border-left: 4px solid var(--accent, #f43f5e);
+      color: #94a3b8;
     }
   </style>
 </head>
@@ -91,8 +95,8 @@
       </form>
 
       <div class="hint-box">
-        <span style="font-weight: 700; color: #1e293b;">💡 Petunjuk Simulasi:</span>
-        <ul style="margin: 0.25rem 0 0 0; padding-left: 1.25rem; color: #475569; line-height: 1.4;">
+        <span style="font-weight: 700; color: #ffffff;">💡 Petunjuk Simulasi:</span>
+        <ul style="margin: 0.25rem 0 0 0; padding-left: 1.25rem; color: #cbd5e1; line-height: 1.4;">
           <li>Ketik <strong style="color: var(--accent, #f43f5e);">alfin</strong> untuk masuk sebagai Customer.</li>
           <li>Ketik <strong style="color: var(--primary, #6366f1);">admin</strong> untuk masuk sebagai Pengelola Platform.</li>
         </ul>

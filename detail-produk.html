@@ -9,11 +9,13 @@
 <body>
   <header class="site-header">
     <div class="container row" style="align-items:center; justify-content:space-between;">
-      <div class="site-brand">EventLite</div>
+      <a href="home-customer.html" class="site-brand" style="text-decoration: none; color: inherit; font-weight: 800;">EventLite</a>
       <nav>
         <a href="home-customer.html" style="margin-right:1rem;">Home</a>
         <a href="katalog.html" style="margin-right:1rem;">Katalog</a>
-        <a href="about.html" style="margin-right:1rem;">About</a>
+        <a href="wordpress/" style="margin-right:1rem;">Artikel</a>
+        <a href="history-transaksi.html" style="margin-right:1rem;">Riwayat</a>
+        <a href="keranjang.html" style="margin-right:1rem;">Keranjang</a>
         <a class="btn btn-ghost" href="index.html">Logout</a>
       </nav>
     </div>
@@ -22,17 +24,17 @@
   <main class="container mt-2">
     <div class="row" style="gap:1.5rem; align-items:flex-start;">
       <div style="flex:1 1 560px;">
-        <img src="https://via.placeholder.com/1200x600?text=Sheila+on+7+Surabaya+Banner" alt="Poster Sheila on 7" style="border-radius:12px;">
+        <img src="images/sheila_on_7.png" alt="Poster Sheila on 7" style="border-radius:12px; width:100%; height:320px; object-fit:cover;">
         
         <div class="mt-2 event-card">
           <h1 class="title">Sheila on 7 — Tunggu Aku Di Surabaya</h1>
           <div class="meta">05 Sep 2026 • Stadion Gelora Bung Tomo, Surabaya</div>
           <p class="text-muted">Siapkan dirimu untuk bernostalgia bersama Duta, Eross, dan Adam! Konser tunggal "Tunggu Aku Di" akhirnya mendarat di Surabaya membawa sederet lagu hits legendaris yang siap dinyanyikan bersama puluhan ribu Sheila Gank. Pintu stadion dibuka mulai pukul 15.00 WIB.</p>
         </div>
-
+        
         <div class="mt-2 event-card">
           <h3 class="small" style="margin-bottom:0.5rem;">Denah Kursi (Seat Plan)</h3>
-          <img src="https://via.placeholder.com/1000x400?text=Denah+Kursi+GBT+Surabaya+[Festival+A+/+VIP]" alt="Denah Kursi GBT" style="border-radius:8px;">
+          <img src="images/seat_plan.png" alt="Denah Kursi GBT" style="border-radius:8px; width:100%;">
         </div>
       </div>
 
@@ -69,8 +71,9 @@
               <div id="ticket-selected-info" class="small text-muted">1 tiket Festival A</div>
             </div>
 
-            <div style="margin-top:0.75rem;">
-              <a href="keranjang.html" id="buy-now" class="btn btn-accent" style="width:100%; padding:0.85rem; font-size:1rem; text-align:center;">Beli Tiket Sekarang</a>
+            <div style="margin-top:0.75rem; display:grid; gap:0.75rem;">
+              <button id="buy-now" type="button" class="btn btn-accent" style="width:100%; padding:0.85rem; font-size:1rem; text-align:center;">Bayar Sekarang</button>
+              <button id="add-to-cart" type="button" class="btn btn-ghost" style="width:100%; padding:0.85rem; font-size:1rem; text-align:center;">Tambah ke Keranjang</button>
             </div>
           </form>
         </div>
